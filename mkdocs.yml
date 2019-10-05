@@ -3,6 +3,7 @@ nav:
 - 简介: index.md
 - 概览: abstract.md
 - 游戏: game.md
+- 控制器: controller.md
 - 裁判: judger.md
 - 播放器: player.md
 - SDK(AI): SDK(AI).md
