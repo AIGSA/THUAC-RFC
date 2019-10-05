@@ -63,6 +63,11 @@
     <a class="" href="../game/">游戏</a>
 	    </li>
           
+            <li class="toctree-l1">
+		
+    <a class="" href="../controller/">控制器</a>
+	    </li>
+          
             <li class="toctree-l1 current">
 		
     <a class="current" href="./">裁判</a>
@@ -72,11 +77,6 @@
     
 
     </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../controller/">(评测端的)控制器</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -127,25 +127,20 @@
             <div class="section">
               
                 <h1 id="_1">裁判程序</h1>
-<p>裁判程序的生命周期如下(<strong>该框图已过时</strong>)</p>
+<p>裁判程序的生命周期如下</p>
 <p><img alt="裁判" src="../imgs/裁判.png" /></p>
-<p><strong>裁判程序只负责监听由网站转发的接口，不与玩家直接交互</strong></p>
-<p>裁判程序应当收到以下初始信息</p>
+<p><strong>裁判程序不会建立任何socket通信，与后端的通信都会通过控制器进行。</strong></p>
+<p>每一回合，裁判程序接收到的消息如下</p>
 <ul>
-<li>每个玩家背后是AI还是人类（对AI与人类应当给出不同的等待时间）</li>
-<li>与监听消息有关的配置信息</li>
-<li>其他</li>
-</ul>
-<p>裁判程序接收到的消息如下</p>
-<ul>
-<li>玩家经由网站转发回复的消息</li>
-<li>来自网站的控制消息（例如强制结束消息，裁判程序一旦收到强制结束消息，立即结束比赛并返回比赛结果）</li>
+<li>游戏逻辑发送给裁判程序多份局面信息，每份局面信息对应一个玩家（AI客户端），即不同玩家收到的局面信息可能是不一样的</li>
+<li>来自玩家的操作信息</li>
+<li>来自控制器的控制消息（例如强制结束消息，裁判程序一旦收到强制结束消息，立即结束比赛并返回比赛结果）</li>
 </ul>
 <p>裁判程序发出的消息如下</p>
 <ul>
 <li>发送给玩家的消息</li>
-<li>发送给网站的消息</li>
-<li>发送给观众/录像文件的消息</li>
+<li>发送给游戏逻辑的消息</li>
+<li>发送给控制器的消息（如需要通过socket发送给播放器的局面/操作信息）</li>
 </ul>
               
             </div>
@@ -154,10 +149,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../controller/" class="btn btn-neutral float-right" title="(评测端的)控制器">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../player/" class="btn btn-neutral float-right" title="播放器">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../game/" class="btn btn-neutral" title="游戏"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../controller/" class="btn btn-neutral" title="控制器"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -183,10 +178,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../game/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../controller/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../controller/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../player/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

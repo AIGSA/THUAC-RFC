@@ -71,12 +71,12 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../judger/">裁判</a>
+    <a class="" href="../controller/">控制器</a>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="../controller/">(评测端的)控制器</a>
+    <a class="" href="../judger/">裁判</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -138,19 +138,19 @@
 </ul>
 <p>回合流程：</p>
 <ul>
-<li>裁判程序<strong>通过网站</strong>向玩家和观众分别发送消息<ul>
+<li>控制程序<strong>通过网站</strong>向<strong>人类玩家</strong>和观众分别发送消息<ul>
 <li>向每个玩家或观众发送的消息可能各不相同</li>
 <li>消息的类型为字符串</li>
 <li>如果需要玩家回复消息，则应当在消息中给出限制时间</li>
 </ul>
 </li>
-<li>各玩家<strong>通过网站</strong>回复消息<ul>
+<li>各人类玩家<strong>通过网站</strong>回复消息<ul>
 <li>回复消息可以在限制时间内的任一时刻</li>
 <li>超时后回复的消息视作无效</li>
 <li>在限制时间内可以回复多条消息，以最后一条为准</li>
 </ul>
 </li>
-<li>裁判收到所有消息，或未收到消息的玩家已超时后，执行本回合逻辑判定<ul>
+<li>控制器收到所有消息，或未收到消息的玩家已超时后，执行本回合逻辑判定<ul>
 <li>未收到消息的玩家视作执行了默认操作</li>
 </ul>
 </li>
@@ -162,7 +162,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../judger/" class="btn btn-neutral float-right" title="裁判">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../controller/" class="btn btn-neutral float-right" title="控制器">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../abstract/" class="btn btn-neutral" title="概览"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -194,7 +194,7 @@
         <span><a href="../abstract/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../judger/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../controller/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
