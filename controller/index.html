@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>(评测端的)控制器 - THUAC RFC</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "(\u8bc4\u6d4b\u7aef\u7684)\u63a7\u5236\u5668";
+    var mkdocs_page_input_path = "controller.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> THUAC RFC</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">简介</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../abstract/">概览</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../game/">游戏</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../judger/">裁判</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">(评测端的)控制器</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#_1">(评测端的)控制器接口</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#-">控制器-后端</a></li>
+        
+            <li><a class="toctree-l3" href="#-judger">控制器-judger</a></li>
+        
+            <li><a class="toctree-l3" href="#-_1">控制器-游戏逻辑</a></li>
+        
+            <li><a class="toctree-l3" href="#-_2">控制器-编译器</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../player/">播放器</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../SDK(AI)/">SDK(AI)</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../website/">网站</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">THUAC RFC</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>(评测端的)控制器</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="_1">(评测端的)控制器接口</h1>
+<p>控制器的接口分为控制器-后端，控制器-judger，控制器-游戏逻辑，控制器-编译器四个部分</p>
+<h2 id="-">控制器-后端</h2>
+<p>控制器与后端的交互通过websocket进行，后端作为server，控制器作为client。<br />
+控制器与后端的常规交互信息均为字符串：  </p>
+<blockquote>
+<p>"Ready": 控制器初始化完成，发送"Ready"到后端表示准备完成。后端应返回字符串"Ready"回应。<br />
+"Request_For_Commands": 控制器每隔1秒钟向后端拉取指令。控制器应返回的值为：</p>
+<blockquote>
+<p>"No_Commands": 无新的命令。<br />
+"Start_Game_Command": 新的比赛请求。发送该指令后，控制器应当继续发送一个json文件，格式为：  </p>
+<blockquote>
+<p>"Game_ID": "xxx", "Team_Numbers": "xxx", "Team_A": "{"Player_Numbers": "xxx", "Player_A": "[AI_Token\Human_Player]", ...}", ...<br />
+Game_ID是游戏标识符，唯一确定一局游戏用；<br />
+Team_Numbers：队伍数量，对于大部分游戏为2；<br />
+Team_？：队伍，储存一个json文件，里面包括队伍人数、队伍AI的token(若为真人玩家，则把token换为字符串"Human_Player")。</p>
+</blockquote>
+<p>"Complie_Command": 编译指令。发送指令后，控制器应当继续发送一个json文件，格式为：  </p>
+<blockquote>
+<p>"File_Number": "xxx", "File_A": "[File_Path]", ...</p>
+</blockquote>
+</blockquote>
+<p>"Game_Ended"：游戏结束，将返回一个json文件  </p>
+<blockquote>
+<p>"Errors": "[error]", "Battle_Info": "[File_Path]"<br />
+Errors：若游戏异常中止，则error为异常信息，否则为"None"；
+Battle_Info：回放文件路径。</p>
+</blockquote>
+<p>"Compile_Ended"：编译结束，将返回一个json文件</p>
+<blockquote>
+<p>“File_Name": "[File_Name]", "Errors": "[error]"
+File_Name：编译完成的文件名字；
+Errors：若该文件编译时出错，则error为异常信息，否则为"None"。</p>
+</blockquote>
+<p>"Disconnect"：控制器收到退出指令，与后端断开链接。后端的行为由zah决定。</p>
+</blockquote>
+<p>局面信息的传递暂且不管，等决定是由judger直接控制还是统一交给后端时再决定</p>
+<h2 id="-judger">控制器-judger</h2>
+<p>控制器通过subprocess.Popen()方法运行judger的脚本文件，同时将judger的标准输入输出接到控制器中，由控制器负责judger与游戏逻辑的交互。  </p>
+<p><strong>judger调用方式：</strong></p>
+<blockquote>
+<p>python3 [ Judger_Path ] [ Player_Number ] [ AI_Path/Human_Player ]...</p>
+</blockquote>
+<h2 id="-_1">控制器-游戏逻辑</h2>
+<p>游戏逻辑需要提供一个可执行文件，控制器通过subprocess.Popen()方法运行游戏逻辑的可执行文件，同时将游戏逻辑的标准输入输出接到控制器中，由控制器负责judger与游戏逻辑的交互</p>
+<p><strong>游戏逻辑调用方式：</strong></p>
+<blockquote>
+<p>[ Logic_Path ] [ Player_Number ]</p>
+</blockquote>
+<pre><code>在judger和游戏逻辑向控制器写入文本的时候，需要在写完文本之后调用flush清空缓冲区，否则控制器可能无法渡入写入的文本，从而造成judger和游戏逻辑的强行中止。
+</code></pre>
+<h2 id="-_2">控制器-编译器</h2>
+<p>控制器只负责运行编译器，不与编译器交互</p>
+<p><strong>编译器调用方式：</strong> 参考编译器使用方法</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../player/" class="btn btn-neutral float-right" title="播放器">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../judger/" class="btn btn-neutral" title="裁判"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../judger/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../player/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>
