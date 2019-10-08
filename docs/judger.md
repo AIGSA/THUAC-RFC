@@ -38,9 +38,9 @@
 			"top": "blue_0",
 			"color": "blue",
 			"card": ["none+4", "none_W"],
+            "your round": "",
 		}
-	],
-	"listen": ["player2"],
+	]
 }
 
 // game to judger: end round
