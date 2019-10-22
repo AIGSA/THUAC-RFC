@@ -8,6 +8,7 @@ nav:
 - 播放器: player.md
 - SDK(AI): SDK(AI).md
 - 网站: website.md
+- 网站后端-测评端: backend2judger.md
 
 
 theme: readthedocs
