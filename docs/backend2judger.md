@@ -183,7 +183,7 @@
 
 ```json
 {
-    "type": 3
+    "type": 4
     "data": {
 		ai_token
 	}
@@ -198,7 +198,7 @@
 
 ```json
 {
-    "type": 3,
+    "type": 4,
     ai_id,
     data_length,
     data
