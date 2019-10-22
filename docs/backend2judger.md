@@ -164,7 +164,7 @@
 ```json
 {
     "type": 3,
-    game_id,
+    game_token,
     data_length,
     data
 }
@@ -199,7 +199,7 @@
 ```json
 {
     "type": 4,
-    ai_id,
+    ai_token,
     data_length,
     data
 }
