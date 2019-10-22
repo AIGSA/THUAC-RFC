@@ -143,12 +143,12 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="_1">网站后端与测评端交互文档</h2>
-<h3 id="_2">概要</h3>
+                <h1 id="_1">网站后端与测评端交互文档</h1>
+<h2 id="_2">概要</h2>
 <p>该文档定义了网站后端与测评端交互的接口。原则上双方通信均采用 Websocket 协议，除传输文件外，信息一律采用 JSON 编码。</p>
-<h3 id="_3">定义</h3>
+<h2 id="_3">定义</h2>
 <p>网站后端将 Websocket Server 启动在 <code>ws://HOSTNAME:PORT/ws</code> 上</p>
-<h3 id="_4">基本流程</h3>
+<h2 id="_4">基本流程</h2>
 <ol>
 <li>网站后端启动 Websocket Server</li>
 <li>测评端通过 Websocket 连接至网站后端</li>
@@ -156,9 +156,9 @@
 <li>测评端向网站后端以论询的方式发送请求</li>
 <li>测评端断开 Websocket，此时网站后端认为测评端下线</li>
 </ol>
-<h3 id="api">API</h3>
-<h4 id="_5">初始化</h4>
-<h5 id="_6">测评端发送</h5>
+<h2 id="api">API</h2>
+<h3 id="_5">初始化</h3>
+<h4 id="_6">测评端发送</h4>
 <pre><code class="json">{
     type: 0,
     data: {
@@ -174,7 +174,7 @@
 <p>测评端的地址，形如 <code>1.1.1.1:5000</code>，必须外网可访问。</p>
 <p>如果提供地址，该测评端将被认为提供了一个完整的房间系统服务，会在网站前端的房间服务器列表中进行显示。</p>
 <p>如果未提供地址，则网站认为测评端不提供房间系统服务。</p>
-<h5 id="_7">网站后端发送</h5>
+<h4 id="_7">网站后端发送</h4>
 <pre><code class="json">{
     &quot;type&quot;: 0
     &quot;data&quot;: {
@@ -188,16 +188,16 @@
 <p>网站后端是否成功接受测评机的初始化请求</p>
 <p><strong>data.msg : string : required</strong></p>
 <p>网站后端返回的信息</p>
-<h4 id="_8">任务请求</h4>
-<h5 id="_9">测评端发送</h5>
+<h3 id="_8">任务请求</h3>
+<h4 id="_9">测评端发送</h4>
 <pre><code class="json">{
     &quot;type&quot;: 1
 }
 </code></pre>
 
 <p>表示测评端希望向网站后端拉取一个测评任务</p>
-<h4 id="_10">对局测评任务</h4>
-<h5 id="_11">网站后端发送</h5>
+<h3 id="_10">对局测评任务</h3>
+<h4 id="_11">网站后端发送</h4>
 <pre><code class="json">{
     &quot;type&quot;: 2
     &quot;data&quot;: {
@@ -217,7 +217,7 @@
 }
 </code></pre>
 
-<h5 id="_12">评测端发送</h5>
+<h4 id="_12">评测端发送</h4>
 <pre><code class="json">{
     &quot;type&quot;: 2
     &quot;data&quot;: {
@@ -227,8 +227,8 @@
 }
 </code></pre>
 
-<h4 id="ai">AI 编译任务</h4>
-<h5 id="_13">网站后端发送</h5>
+<h3 id="ai">AI 编译任务</h3>
+<h4 id="_13">网站后端发送</h4>
 <pre><code class="json">{
     &quot;type&quot;: 3
     &quot;data&quot;: {
@@ -239,7 +239,7 @@
 
 <p><strong>ai_token : string : required </strong></p>
 <p>表示待编译的 AI 的 token</p>
-<h5 id="_14">评测端发送</h5>
+<h4 id="_14">评测端发送</h4>
 <pre><code class="json">{
     &quot;type&quot;: 3
     &quot;data&quot;: {
@@ -249,8 +249,8 @@
 }
 </code></pre>
 
-<h4 id="_15">游戏包下载请求</h4>
-<h5 id="_16">测评端发送</h5>
+<h3 id="_15">游戏包下载请求</h3>
+<h4 id="_16">测评端发送</h4>
 <pre><code class="json">{
     &quot;type&quot;: 3
     &quot;data&quot;: {
@@ -261,7 +261,7 @@
 
 <p><strong>game_token : string : required </strong></p>
 <p>表示需要下载的游戏包的 token</p>
-<h5 id="_17">网站后端发送</h5>
+<h4 id="_17">网站后端发送</h4>
 <pre><code class="json">{
     &quot;type&quot;: 3,
     game_id,
@@ -277,8 +277,8 @@
 <li>接下来 8 个 Byte 表示数据长度 <code>data_length</code></li>
 <li>后面 <code>data_length</code> 个字节表示传输的数据</li>
 </ol>
-<h4 id="ai_1">AI 包下载请求</h4>
-<h5 id="_18">测评端发送</h5>
+<h3 id="ai_1">AI 包下载请求</h3>
+<h4 id="_18">测评端发送</h4>
 <pre><code class="json">{
     &quot;type&quot;: 3
     &quot;data&quot;: {
@@ -289,7 +289,7 @@
 
 <p><strong>ai_token : string : required </strong></p>
 <p>表示需要下载的 AI 的 token</p>
-<h5 id="_19">网站后端发送</h5>
+<h4 id="_19">网站后端发送</h4>
 <pre><code class="json">{
     &quot;type&quot;: 3,
     ai_id,
