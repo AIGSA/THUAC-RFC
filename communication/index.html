@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>SDK(AI) - THUAC RFC</title>
+  <title>Communication - THUAC RFC</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "SDK(AI)";
-    var mkdocs_page_input_path = "SDK(AI).md";
+    var mkdocs_page_name = "Communication";
+    var mkdocs_page_input_path = "communication.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -78,15 +78,9 @@
     <a class="" href="../player/">播放器</a>
 	    </li>
           
-            <li class="toctree-l1 current">
+            <li class="toctree-l1">
 		
-    <a class="current" href="./">SDK(AI)</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l2"><a href="#sdkai">SDK(AI)</a></li>
-    
-
-    </ul>
+    <a class="" href="../SDK(AI)/">SDK(AI)</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -121,7 +115,7 @@
     
       
     
-    <li>SDK(AI)</li>
+    <li>Communication</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -131,24 +125,26 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="sdkai">SDK(AI)</h2>
-<p>SDK用于封装AI代码，也与使用本地算力，部署有关</p>
-<p>SDK与AI代码共同打包成可执行文件SDK(AI)，启动时传入玩家token</p>
-<p>SDK(AI)生命周期如下</p>
-<p><img alt="SDK" src="../imgs/SDK.png" /></p>
+                <h2 id="controller">评测端：Controller</h2>
+<p>评测端通过<code>Controller</code>负责与前后端交互、启动编译和启动游戏对局。</p>
+<p>Controller启动：<br />
+<code>python3 controller.py</code></p>
+<p>注意在启动controller时，需要保证有服务器在指定ip和端口上运行。  </p>
+<h3 id="controller_1">Controller接口</h3>
+<h4 id="_1">与服务器接口</h4>
+<p>controller与服务器之间使用websocket连接，双方交互信息逻辑如下<br />
+1. controller向服务器发送字符串“Ready”表示controller已经初始化完成
+2. 服务器向controller发送字符串“Ready”表示服务器已初始化完成
+3. controller每0.1s向服务器发送一个字符串“Request_For_Commands“，表示拉取请求
+4. 若服务器没有接受到请求，则返回字符串”No_Commands“；若接收到请求，则根据请求类型返回字符串”Start_Game_Command“或”Compile_Command“
+5. 若服务器返回“Start_Game_Command”，则服务器需要再发送一个json文件，文件格式为<code>{"Game_ID": xxx, "Team_Number": xxx, "Teams": ["Team_A": "{"Player_Number": "xxx", "Player_A": "AI_Token\Human_Player", ...}", ...]}</code>分别表示游戏ID、队伍数量、队伍信息等
+6. 若服务器返回“Compile_Command”，则服务器需要再发送一个json文件，文件格式为<code>{"File_Name": filename, "File": file, "Token": token}</code>，分别表示文件名称、文件内容、文件标识符
+7. 游戏结束时，controller向服务器发送信息[待定]
+8. 编译结束时，controller向服务器发送消息[待定]</p>
               
             </div>
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../website/" class="btn btn-neutral float-right" title="网站">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-        <a href="../player/" class="btn btn-neutral" title="播放器"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>
@@ -172,10 +168,6 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../player/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../website/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

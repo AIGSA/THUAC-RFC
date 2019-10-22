@@ -75,6 +75,12 @@
             
     <li class="toctree-l2"><a href="#_1">裁判程序</a></li>
     
+        <ul>
+        
+            <li><a class="toctree-l3" href="#ai">与游戏逻辑/AI的通信样例</a></li>
+        
+        </ul>
+    
 
     </ul>
 	    </li>
@@ -92,6 +98,11 @@
             <li class="toctree-l1">
 		
     <a class="" href="../website/">网站</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../backend2judger/">网站后端-测评端</a>
 	    </li>
           
         </ul>
@@ -142,6 +153,64 @@
 <li>发送给游戏逻辑的消息</li>
 <li>发送给控制器的消息（如需要通过socket发送给播放器的局面/操作信息）</li>
 </ul>
+<h2 id="ai">与游戏逻辑/AI的通信样例</h2>
+<pre><code class="json">// game to judger: normal round
+{
+    &quot;state&quot;: &quot;233&quot;,
+    &quot;player&quot;: [&quot;player1&quot;, &quot;player2&quot;],
+    &quot;content&quot;:
+    [
+        {
+            &quot;top&quot;: &quot;blue_0&quot;,
+            &quot;color&quot;: &quot;blue&quot;,
+            &quot;card&quot;: [&quot;blue_1&quot;, &quot;red_0&quot;],
+        },
+        {
+            &quot;top&quot;: &quot;blue_0&quot;,
+            &quot;color&quot;: &quot;blue&quot;,
+            &quot;card&quot;: [&quot;none+4&quot;, &quot;none_W&quot;],
+            &quot;your round&quot;: &quot;&quot;,
+        }
+    ]
+}
+
+// game to judger: end round
+{
+    &quot;state&quot;: &quot;0&quot;,
+    &quot;end_info&quot;:
+    {
+        &quot;player&quot;: [&quot;player1&quot;, &quot;player2&quot;],
+        &quot;score&quot;: [&quot;0&quot;, &quot;100&quot;]
+    }
+}
+
+// judger to player 2
+{
+    &quot;state&quot;: &quot;233&quot;,
+    &quot;top&quot;: &quot;blue_0&quot;,
+    &quot;color&quot;: &quot;blue&quot;,
+    &quot;card&quot;: [&quot;none+4&quot;, &quot;none_W&quot;],
+}
+
+// player to judger
+{
+    &quot;state&quot;: &quot;233&quot;,
+    &quot;card&quot;: &quot;none+4&quot;,
+    &quot;color&quot;: &quot;yellow&quot;,
+}
+
+// judger to game
+{
+    &quot;player&quot;: [&quot;player2&quot;],
+    &quot;content&quot;: [
+        {
+            &quot;state&quot;: &quot;233&quot;,
+            &quot;card&quot;: &quot;none+4&quot;,
+            &quot;color&quot;: &quot;yellow&quot;,
+        }
+    ]
+}
+</code></pre>
               
             </div>
           </div>

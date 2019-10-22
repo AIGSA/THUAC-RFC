@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>网站后端-测评端 - THUAC RFC</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "\u7f51\u7ad9\u540e\u7aef-\u6d4b\u8bc4\u7aef";
+    var mkdocs_page_input_path = "backend2judger.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> THUAC RFC</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">简介</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../abstract/">概览</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../game/">游戏</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../controller/">控制器</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../judger/">裁判</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../player/">播放器</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../SDK(AI)/">SDK(AI)</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../website/">网站</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">网站后端-测评端</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#_1">网站后端与测评端交互文档</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#_2">概要</a></li>
+        
+            <li><a class="toctree-l3" href="#_3">定义</a></li>
+        
+            <li><a class="toctree-l3" href="#_4">基本流程</a></li>
+        
+            <li><a class="toctree-l3" href="#api">API</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">THUAC RFC</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>网站后端-测评端</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="_1">网站后端与测评端交互文档</h2>
+<h3 id="_2">概要</h3>
+<p>该文档定义了网站后端与测评端交互的接口。原则上双方通信均采用 Websocket 协议，除传输文件外，信息一律采用 JSON 编码。</p>
+<h3 id="_3">定义</h3>
+<p>网站后端将 Websocket Server 启动在 <code>ws://HOSTNAME:PORT/ws</code> 上</p>
+<h3 id="_4">基本流程</h3>
+<ol>
+<li>网站后端启动 Websocket Server</li>
+<li>测评端通过 Websocket 连接至网站后端</li>
+<li>测评端发送初始化指令，此时网站后端认为测评端上线</li>
+<li>测评端向网站后端以论询的方式发送请求</li>
+<li>测评端断开 Websocket，此时网站后端认为测评端下线</li>
+</ol>
+<h3 id="api">API</h3>
+<h4 id="_5">初始化</h4>
+<h5 id="_6">测评端发送</h5>
+<pre><code class="json">{
+    type: 0,
+    data: {
+        description,
+        address
+    }
+}
+</code></pre>
+
+<p><strong>data.description : string : required</strong></p>
+<p>描述测评端的信息，用于前端显示</p>
+<p><strong>data.address : string : optional</strong></p>
+<p>测评端的地址，形如 <code>1.1.1.1:5000</code>，必须外网可访问。</p>
+<p>如果提供地址，该测评端将被认为提供了一个完整的房间系统服务，会在网站前端的房间服务器列表中进行显示。</p>
+<p>如果未提供地址，则网站认为测评端不提供房间系统服务。</p>
+<h5 id="_7">网站后端发送</h5>
+<pre><code class="json">{
+    &quot;type&quot;: 0
+    &quot;data&quot;: {
+        success,
+        msg
+    }
+}
+</code></pre>
+
+<p><strong>data.success : boolean : required</strong></p>
+<p>网站后端是否成功接受测评机的初始化请求</p>
+<p><strong>data.msg : string : required</strong></p>
+<p>网站后端返回的信息</p>
+<h4 id="_8">任务请求</h4>
+<h5 id="_9">测评端发送</h5>
+<pre><code class="json">{
+    &quot;type&quot;: 1
+}
+</code></pre>
+
+<p>表示测评端希望向网站后端拉取一个测评任务</p>
+<h4 id="_10">对局测评任务</h4>
+<h5 id="_11">网站后端发送</h5>
+<pre><code class="json">{
+    &quot;type&quot;: 2
+    &quot;data&quot;: {
+        game_token,
+        team_number,
+        &quot;teams&quot;: [
+            {
+                player_number,
+                &quot;players&quot;: [
+                    {
+                        type,
+                        token
+                    }
+                ],
+            }
+    }
+}
+</code></pre>
+
+<h5 id="_12">评测端发送</h5>
+<pre><code class="json">{
+    &quot;type&quot;: 2
+    &quot;data&quot;: {
+        game_token,
+        result
+    }
+}
+</code></pre>
+
+<h4 id="ai">AI 编译任务</h4>
+<h5 id="_13">网站后端发送</h5>
+<pre><code class="json">{
+    &quot;type&quot;: 3
+    &quot;data&quot;: {
+        ai_token
+    }
+}
+</code></pre>
+
+<p><strong>ai_token : string : required </strong></p>
+<p>表示待编译的 AI 的 token</p>
+<h5 id="_14">评测端发送</h5>
+<pre><code class="json">{
+    &quot;type&quot;: 3
+    &quot;data&quot;: {
+        ai_token,
+        result
+    }
+}
+</code></pre>
+
+<h4 id="_15">游戏包下载请求</h4>
+<h5 id="_16">测评端发送</h5>
+<pre><code class="json">{
+    &quot;type&quot;: 3
+    &quot;data&quot;: {
+        game_token
+    }
+}
+</code></pre>
+
+<p><strong>game_token : string : required </strong></p>
+<p>表示需要下载的游戏包的 token</p>
+<h5 id="_17">网站后端发送</h5>
+<pre><code class="json">{
+    &quot;type&quot;: 3,
+    game_id,
+    data_length,
+    data
+}
+</code></pre>
+
+<p>传输二进制数据</p>
+<ol>
+<li>前两个 Byte 表示 <code>type</code>，为 short 类型</li>
+<li>接下来 8 个 Byte 表示 <code>game_token</code>，为 <code>long long</code> 类型</li>
+<li>接下来 8 个 Byte 表示数据长度 <code>data_length</code></li>
+<li>后面 <code>data_length</code> 个字节表示传输的数据</li>
+</ol>
+<h4 id="ai_1">AI 包下载请求</h4>
+<h5 id="_18">测评端发送</h5>
+<pre><code class="json">{
+    &quot;type&quot;: 3
+    &quot;data&quot;: {
+        ai_token
+    }
+}
+</code></pre>
+
+<p><strong>ai_token : string : required </strong></p>
+<p>表示需要下载的 AI 的 token</p>
+<h5 id="_19">网站后端发送</h5>
+<pre><code class="json">{
+    &quot;type&quot;: 3,
+    ai_id,
+    data_length,
+    data
+}
+</code></pre>
+
+<p>传输二进制数据</p>
+<ol>
+<li>前两个 Byte 表示 <code>type</code>，为 short 类型</li>
+<li>接下来 8 个 Byte 表示 <code>ai_token</code>，为 <code>long long</code> 类型</li>
+<li>接下来 8 个 Byte 表示数据长度 <code>data_length</code></li>
+<li>后面 <code>data_length</code> 个字节表示传输的数据</li>
+</ol>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../website/" class="btn btn-neutral" title="网站"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../website/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>
