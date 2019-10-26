@@ -281,9 +281,11 @@
 <h4 id="put_1">PUT</h4>
 <p>评测端对局评测完成后，返回评测信息</p>
 <p><strong>数据（Form 格式）</strong></p>
+<p>请求的 Header 应为：<code>Content-Type": "multipart/form-data; boundary=BoUnDaRyStRiNg"</code></p>
 <ul>
 <li>file: 文件，表示评测文件</li>
 <li>message: 字符串，表示评测结果</li>
+<li>state: 字符串， 表示评测状态，取值范围是 <code>['准备中', '评测中', '评测成功', '评测失败']</code></li>
 </ul>
 <p><strong>返回</strong></p>
 <ul>
