@@ -53,7 +53,8 @@
 {
     "type": 1
     "data": {
-		game_token,
+    	match_id,
+		game_id,
     	team_number,
     	"teams": [
     		{
@@ -61,7 +62,7 @@
     			"players": [
     				{
 						type,
-    					token
+    					player_id
 					}
     			],
 			}
@@ -75,7 +76,8 @@
 {
     "type": 1
     "data": {
-		game_token,
+    	match_id,
+		game_id,
 		result
 	}
 }
@@ -83,7 +85,7 @@
 
 ### AI 编译任务
 
-#### 网站后端发送
+#### 网后端发送
 
 ```json
 {
