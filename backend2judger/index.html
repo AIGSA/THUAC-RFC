@@ -182,7 +182,8 @@
 <pre><code class="json">{
     &quot;type&quot;: 1
     &quot;data&quot;: {
-        game_token,
+        match_id,
+        game_id,
         team_number,
         &quot;teams&quot;: [
             {
@@ -190,7 +191,7 @@
                 &quot;players&quot;: [
                     {
                         type,
-                        token
+                        player_id
                     }
                 ],
             }
@@ -202,14 +203,15 @@
 <pre><code class="json">{
     &quot;type&quot;: 1
     &quot;data&quot;: {
-        game_token,
+        match_id,
+        game_id,
         result
     }
 }
 </code></pre>
 
 <h3 id="ai">AI 编译任务</h3>
-<h4 id="_10">网站后端发送</h4>
+<h4 id="_10">网后端发送</h4>
 <pre><code class="json">{
     &quot;type&quot;: 2
     &quot;data&quot;: {
