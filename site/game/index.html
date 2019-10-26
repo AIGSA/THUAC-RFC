@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>游戏 - THUAC RFC</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "\u6e38\u620f";
+    var mkdocs_page_input_path = "game.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> THUAC RFC</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">简介</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../abstract/">概览</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">游戏</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#_1">游戏</a></li>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../controller/">控制器</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../judger/">裁判</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../player/">播放器</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../SDK(AI)/">SDK(AI)</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../website/">网站</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../backend2judger/">网站后端-测评端</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">THUAC RFC</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>游戏</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="_1">游戏</h1>
+<p>游戏具有如下限定：</p>
+<ul>
+<li>回合制游戏：游戏具有回合流程的形式</li>
+<li>玩家数大于等于2</li>
+<li>不会增加玩家</li>
+<li>具有玩家超时后的默认操作</li>
+<li>在一轮游戏结束后，可以给出每个玩家的得分情况</li>
+<li>任一时刻均可以抽象表示整个局面（便于观众的随时加入）</li>
+</ul>
+<p>回合流程：</p>
+<ul>
+<li>控制程序<strong>通过网站</strong>向<strong>人类玩家</strong>和观众分别发送消息<ul>
+<li>向每个玩家或观众发送的消息可能各不相同</li>
+<li>消息的类型为字符串</li>
+<li>如果需要玩家回复消息，则应当在消息中给出限制时间</li>
+</ul>
+</li>
+<li>各人类玩家<strong>通过网站</strong>回复消息<ul>
+<li>回复消息可以在限制时间内的任一时刻</li>
+<li>超时后回复的消息视作无效</li>
+<li>在限制时间内可以回复多条消息，以最后一条为准</li>
+</ul>
+</li>
+<li>控制器收到所有消息，或未收到消息的玩家已超时后，执行本回合逻辑判定<ul>
+<li>未收到消息的玩家视作执行了默认操作</li>
+</ul>
+</li>
+</ul>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../controller/" class="btn btn-neutral float-right" title="控制器">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../abstract/" class="btn btn-neutral" title="概览"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../abstract/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../controller/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>

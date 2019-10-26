@@ -2,21 +2,22 @@
 
 ## 概要
 
-该文档定义了网站后端与测评端交互的接口。原则上双方通信均采用 Websocket 协议，除传输文件外，信息一律采用 JSON 编码。
+该文档定义了网站后端与测评端交互的接口。原则上，对于测评任务的分配以及测评结果的返回，双方采用 Websocket 协议通信。对于测评端向服务器端的数据获取，采用 HTTP 协议。
 
 ## 定义
 
-网站后端将 Websocket Server 启动在 `ws://HOSTNAME:PORT/ws` 上
+网站后端将 Websocket 服务器启动在 `ws://HOSTNAME:PORT/ws` 上
+网站后端将 HTTP API 启动在 `http://HOSTNAME:PORT/judger` 上
 
 ## 基本流程
 
-1. 网站后端启动 Websocket Server
+1. 网站后端启动 Websocket Server / HTTP Server
 2. 测评端通过 Websocket 连接至网站后端
 3. 测评端发送初始化指令，此时网站后端认为测评端上线
-4. 测评端向网站后端以论询的方式发送请求
+4. 网站后端与测评端进行通信
 5. 测评端断开 Websocket，此时网站后端认为测评端下线
 
-## API
+## Websocket 通信
 
 ### 初始化
 
@@ -44,46 +45,13 @@
 
 如果未提供地址，则网站认为测评端不提供房间系统服务。
 
-#### 网站后端发送
-
-```json
-{
-    "type": 0
-    "data": {
-    	success,
-    	msg
-	}
-}
-```
-
-**data.success : boolean : required**
-
-网站后端是否成功接受测评机的初始化请求
-
-**data.msg : string : required**
-
-网站后端返回的信息
-
-
-### 任务请求
-
-#### 测评端发送
-
-```json
-{
-    "type": 1
-}
-```
-
-表示测评端希望向网站后端拉取一个测评任务
-
 ### 对局测评任务
 
 #### 网站后端发送
 
 ```json
 {
-    "type": 2
+    "type": 1
     "data": {
 		game_token,
     	team_number,
@@ -101,11 +69,11 @@
 }
 ```
 
-#### 评测端发送
+#### 评测端回复
 
 ```json
 {
-    "type": 2
+    "type": 1
     "data": {
 		game_token,
 		result
@@ -119,96 +87,71 @@
 
 ```json
 {
-    "type": 3
+    "type": 2
     "data": {
-		ai_token
+		code_id
 	}
 }
 ```
 
-**ai_token : string : required **
+**code_token : string : required **
 
-表示待编译的 AI 的 token
+表示待编译的代码的 token
 
-#### 评测端发送
+#### 评测端回复
 
 ```json
 {
-    "type": 3
+    "type": 2
     "data": {
-		ai_token,
+		code_id,
 		result
 	}
 }
 ```
 
-### 游戏包下载请求
+## HTTP API
 
-#### 测评端发送
+### URL: codes/<code_id>/
 
-```json
+#### GET
+
+只读接口，提供具体代码数据。
+
+**响应**
+
+- 200：获取成功
+
+**返回**
+
+```python
 {
-    "type": 3
-    "data": {
-		game_token
-	}
+    'entity': 							# info of entity
+    {
+        'user': 'moon', 				# user's name
+        'name': 'test1',				# entity's name
+        'game': 'love', 				# game's name
+        'created_time': 'Tue, 22 Oct 2019 10:04:38 +0800', 
+        'id': 1, 						# entity's id
+        'versions': 3,					# entity's versions
+        'update_time': 'Fri, 25 Oct 2019 13:27:17 +0800'
+    },
+    'remark': 'test', 					# code remark
+    'version': 5, 						# code version id
+    'url': '/judger/codes/1/download/'	# code download url
 }
 ```
 
-**game_token : string : required **
+### URL: codes/<code_id>/download/
 
-表示需要下载的游戏包的 token
+#### GET
 
-#### 网站后端发送
+下载目标代码。
 
-```json
-{
-    "type": 3,
-    game_token,
-    data_length,
-    data
-}
-```
+**响应**
 
-传输二进制数据
+- 200：获取成功
 
-1. 前两个 Byte 表示 `type`，为 short 类型
-2. 接下来 8 个 Byte 表示 `game_token`，为 `long long` 类型
-3. 接下来 8 个 Byte 表示数据长度 `data_length`
-4. 后面 `data_length` 个字节表示传输的数据
+**返回**
 
-### AI 包下载请求
-
-#### 测评端发送
-
-```json
-{
-    "type": 4
-    "data": {
-		ai_token
-	}
-}
-```
-
-**ai_token : string : required **
-
-表示需要下载的 AI 的 token
-
-#### 网站后端发送
-
-```json
-{
-    "type": 4,
-    ai_token,
-    data_length,
-    data
-}
-```
-
-传输二进制数据
-
-1. 前两个 Byte 表示 `type`，为 short 类型
-2. 接下来 8 个 Byte 表示 `ai_token`，为 `long long` 类型
-3. 接下来 8 个 Byte 表示数据长度 `data_length`
-4. 后面 `data_length` 个字节表示传输的数据
-
+下载内容，文件名为`<code_id>.zip`。
