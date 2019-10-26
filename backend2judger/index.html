@@ -147,7 +147,7 @@
               
                 <h1 id="_1">网站后端与测评端交互文档</h1>
 <h2 id="_2">概要</h2>
-<p>该文档定义了网站后端与测评端交互的接口。原则上，对于测评任务的分配以及测评结果的返回，双方采用 Websocket 协议通信。对于测评端向服务器端的数据获取，采用 HTTP 协议。</p>
+<p>该文档定义了网站后端与测评端交互的接口。原则上，对于测评任务的分配，双方采用 Websocket 协议通信。对于测评端向服务器端的数据获取以及发送，采用 HTTP 协议。</p>
 <h2 id="_3">定义</h2>
 <p>网站后端将 Websocket 服务器启动在 <code>ws://HOSTNAME:PORT/ws</code> 上
 网站后端将 HTTP API 启动在 <code>http://HOSTNAME:PORT/judger</code> 上</p>
@@ -156,7 +156,7 @@
 <li>网站后端启动 Websocket Server / HTTP Server</li>
 <li>测评端通过 Websocket 连接至网站后端</li>
 <li>测评端发送初始化指令，此时网站后端认为测评端上线</li>
-<li>网站后端与测评端进行通信</li>
+<li>网站后端利用 Websocket 和 HTTP API 与测评端进行通信</li>
 <li>测评端断开 Websocket，此时网站后端认为测评端下线</li>
 </ol>
 <h2 id="websocket">Websocket 通信</h2>
