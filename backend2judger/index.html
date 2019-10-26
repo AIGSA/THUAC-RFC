@@ -200,14 +200,15 @@
     &quot;type&quot;: 1
     &quot;data&quot;: {
         match_id,
-        game_id,
-        result
+        success,
+        msg,
     }
 }
 </code></pre>
 
+<p>表示是否成功接受到这个评测任务</p>
 <h3 id="ai">AI 编译任务</h3>
-<h4 id="_10">网后端发送</h4>
+<h4 id="_10">网站后端发送</h4>
 <pre><code class="json">{
     &quot;type&quot;: 2
     &quot;data&quot;: {
@@ -223,11 +224,13 @@
     &quot;type&quot;: 2
     &quot;data&quot;: {
         code_id,
-        result
+        success,
+        msg,
     }
 }
 </code></pre>
 
+<p>表示是否成功接受到这个评测任务</p>
 <h2 id="http-api">HTTP API</h2>
 <h3 id="url-codes">URL: codes/<code_id>/</h3>
 <h4 id="get">GET</h4>
@@ -254,6 +257,17 @@
 }
 </code></pre>
 
+<h4 id="put">PUT</h4>
+<p>代码编译完成后，提交编译信息</p>
+<p><strong>数据</strong></p>
+<ul>
+<li>compile_status: 字符串，表示新的编译状态，取值范围是 <code>['编译成功', '编译失败']</code></li>
+<li>compile_msg: 字符串，表示编译信息</li>
+</ul>
+<p><strong>响应</strong></p>
+<ul>
+<li>200：修改成功</li>
+</ul>
 <h3 id="url-codesdownload">URL: codes/<code_id>/download/</h3>
 <h4 id="get_1">GET</h4>
 <p>下载目标代码。</p>
