@@ -230,7 +230,7 @@
 }
 </code></pre>
 
-<p>表示是否成功接受到这个评测任务</p>
+<p>表示是否成功接受到这个编译任务</p>
 <h2 id="http-api">HTTP API</h2>
 <h3 id="url-codescode_id">URL: codes/:code_id/</h3>
 <h4 id="get">GET</h4>
@@ -258,7 +258,7 @@
 </code></pre>
 
 <h4 id="put">PUT</h4>
-<p>代码编译完成后，提交编译信息</p>
+<p>评测端代码编译完成后，提交编译信息</p>
 <p><strong>数据</strong></p>
 <ul>
 <li>compile_status: 字符串，表示新的编译状态，取值范围是 <code>['编译成功', '编译失败']</code></li>
@@ -277,6 +277,18 @@
 </ul>
 <p><strong>返回</strong></p>
 <p>下载内容，文件名为<code>&lt;code_id&gt;.zip</code>。</p>
+<h3 id="url-matchesmatch_id">URL: matches/:match_id/</h3>
+<h4 id="put_1">PUT</h4>
+<p>评测端对局评测完成后，返回评测信息</p>
+<p><strong>数据（Form 格式）</strong></p>
+<ul>
+<li>file: 文件，表示评测文件</li>
+<li>message: 字符串，表示评测结果</li>
+</ul>
+<p><strong>返回</strong></p>
+<ul>
+<li>200：修改成功</li>
+</ul>
               
             </div>
           </div>
