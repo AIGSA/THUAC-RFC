@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Communication - THUAC RFC</title>
+  <title>房间系统 - THUAC RFC</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Communication";
-    var mkdocs_page_input_path = "communication.md";
+    var mkdocs_page_name = "\u623f\u95f4\u7cfb\u7edf";
+    var mkdocs_page_input_path = "room.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -93,9 +93,25 @@
     <a class="" href="../backend2judger/">网站后端-测评端</a>
 	    </li>
           
-            <li class="toctree-l1">
+            <li class="toctree-l1 current">
 		
-    <a class="" href="../room/">房间系统</a>
+    <a class="current" href="./">房间系统</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#_1">房间系统交互文档</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#_2">概要</a></li>
+        
+            <li><a class="toctree-l3" href="#-">前端 -&gt; 测评端</a></li>
+        
+            <li><a class="toctree-l3" href="#-_1">测评端 -&gt; 前端</a></li>
+        
+        </ul>
+    
+
+    </ul>
 	    </li>
           
         </ul>
@@ -120,7 +136,7 @@
     
       
     
-    <li>Communication</li>
+    <li>房间系统</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -130,26 +146,53 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="controller">评测端：Controller</h2>
-<p>评测端通过<code>Controller</code>负责与前后端交互、启动编译和启动游戏对局。</p>
-<p>Controller启动：<br />
-<code>python3 controller.py</code></p>
-<p>注意在启动controller时，需要保证有服务器在指定ip和端口上运行。  </p>
-<h3 id="controller_1">Controller接口</h3>
-<h4 id="_1">与服务器接口</h4>
-<p>controller与服务器之间使用websocket连接，双方交互信息逻辑如下<br />
-1. controller向服务器发送字符串“Ready”表示controller已经初始化完成
-2. 服务器向controller发送字符串“Ready”表示服务器已初始化完成
-3. controller每0.1s向服务器发送一个字符串“Request_For_Commands“，表示拉取请求
-4. 若服务器没有接受到请求，则返回字符串”No_Commands“；若接收到请求，则根据请求类型返回字符串”Start_Game_Command“或”Compile_Command“
-5. 若服务器返回“Start_Game_Command”，则服务器需要再发送一个json文件，文件格式为<code>{"Game_ID": xxx, "Team_Number": xxx, "Teams": ["Team_A": "{"Player_Number": "xxx", "Player_A": "AI_Token\Human_Player", ...}", ...]}</code>分别表示游戏ID、队伍数量、队伍信息等
-6. 若服务器返回“Compile_Command”，则服务器需要再发送一个json文件，文件格式为<code>{"File_Name": filename, "File": file, "Token": token}</code>，分别表示文件名称、文件内容、文件标识符
-7. 游戏结束时，controller向服务器发送信息[待定]
-8. 编译结束时，controller向服务器发送消息[待定]</p>
+                <h1 id="_1">房间系统交互文档</h1>
+<h2 id="_2">概要</h2>
+<p>该文档定义了前端与测评端的的房间系统交互，原则上所有通信采用 Websocket 协议。</p>
+<p>测评端地址：<code>ws://JUDGER_IP:JUDGER_PORT/ws</code>，该地址应由测评端初始化时提供给网站后端。</p>
+<h2 id="-">前端 -&gt; 测评端</h2>
+<h3 id="_3">获得房间列表</h3>
+<pre><code class="json">{
+    'type': 0
+}
+</code></pre>
+
+<h2 id="-_1">测评端 -&gt; 前端</h2>
+<h3 id="_4">推送房间列表</h3>
+<p>当房间列表更新或者前端主动请求更新房间列表时，服务器应推送完整房间列表</p>
+<pre><code class="json">{
+    'type': 0
+    'data': {
+        'rooms': [
+            {
+                'room_id': 1000,
+                'game': {
+                    'id': 0,
+                    'name': 'uno',
+                    'alias': 'UNO 牌'
+                }
+                'players': [
+                    {
+                       'username': 'admin',
+                       'email': 'admin@saiblo.com'
+                    }
+                ]
+            }
+        ]
+    }
+}
+</code></pre>
               
             </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../backend2judger/" class="btn btn-neutral" title="网站后端-测评端"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -172,6 +215,8 @@
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
+      
+        <span><a href="../backend2judger/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
     </span>
