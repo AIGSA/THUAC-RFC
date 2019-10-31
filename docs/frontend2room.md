@@ -1,0 +1,175 @@
+[TOC]
+
+# 网站前端与评测端房间系统交互文档
+
+
+
+## 概要
+
+​	该文档指定了网站前端与评测机上的房间系统交互的接口，双方采用`Websocket协议`进行通信。
+
+
+
+## 定义
+
+### 房间id
+
+​	对于前端，房间`id`用于确定房间列表中的房间。
+
+
+
+### 房间token
+
+​	房间`token`是针对用户计算而来的，一个`token`应由如下规则生成：
+
+```python
+token = JUDGE_IP + ":" + JUDGE_PORT + "@" + ROOM_ID + "/" + USER_NAME
+```
+
+​	其中`JUDGE_IP`为评测机的IP地址，`JUDGE_PORT`为评测机侦听该房间信息用的端口，`ROOM_ID`为房间的`ID`，`USER_NAME`为该用户的用户名。
+
+
+
+## 控制流程
+
+* 评测机向前端发送房间列表
+* 前端向评测机获取房间列表
+* 用户网站前端申请创建房间
+  * 评测机创建房间并分配房间号
+* 用户在网站前端申请加入房间
+  * 评测机与前端建立连接，并向房间广播
+* 网站前端申请添加AI
+  * 评测机启动AI，并广播AI准备状态
+* 用户在播放器申请加入房间
+  * 评测机连接播放器并向房间广播
+* 用户在前端申请开始游戏
+  * 评测机开始游戏，并向房间广播
+
+
+
+## 通信
+
+如无特例，通信均采用`json`格式的数据进行交互。
+
+
+
+### 前端与评测机建立连接
+
+​	连接成功后，评测机立刻推送房间列表。
+
+
+
+### 评测机推送房间列表
+
+​	评测机发送
+
+```json
+{
+	'type': 'push_room_list',
+    'room': room_list,
+}
+```
+
+​	其中`room_list`为房间列表，其中的对象如下：
+
+```json
+{
+    'id': room_id,
+    'host': host_username,
+    'players': username_list,
+    'game': game_id,
+    'private': Boolean
+}
+```
+
+​	`room_id`为房间id，`host_username`为房主的用户名，`username_list`为该房间中的玩家的`username`列表，`game_id`为房间中的游戏的id，`private`项表示该房间是否拥有密码。	
+
+
+
+### 前端向评测机获取房间列表
+
+​	前端发送
+
+```json
+{
+	'type': 'get_room_list'
+}
+```
+
+​	评测机将回复一个房间列表的推送。
+
+
+
+### 用户在前端申请创建房间
+
+​	前端发送
+
+```json
+{
+    'type': 'create_room',
+    'user': username,
+    'game': game_id,
+    'private': Boolean
+}
+```
+
+
+
+### 评测机创建房间
+
+​	创建完后评测机将会更新房间列表并作推送，同时发送如下信息
+
+```json
+{
+    'type': 'room_created',
+    'user': username,
+    'room': room_id
+}
+```
+
+
+
+### 前端申请加入房间
+
+​	前端应与某个与`room_id`相关联的`websocket`建立连接。
+
+
+
+### 评测机向房间内用户广播房间信息
+
+​	当某个房间内的状态发生变化(增加AI/用户出入等)时，评测机向房间内的用户广播如下信息
+
+```json
+{
+	'type': 'status',
+   	'player': player_list,
+    'game': game_id,
+    'game_status': game_status // Boolean
+    'token': token,
+}
+```
+
+​	其中`game_id`为房间游戏的id，`game_status`表示该游戏是否已经开始，`player_list`为一个列表，列表中的对象格式如下：
+
+```json
+{
+    'type': player_type, // 该用户是'ai'还是'human'还是'remote'
+    'ready': is_ready, // 准备状态，Boolean
+    'name': username // 该玩家的用户名
+}
+```
+
+
+
+### 前端请求游戏开始
+
+​	前端发送：
+
+```json
+{
+	'type': 'start'
+}
+```
+
+​	表示请求游戏开始。
+
