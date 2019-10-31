@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>房间系统 - THUAC RFC</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "\u623f\u95f4\u7cfb\u7edf";
+    var mkdocs_page_input_path = "frontend2room.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> THUAC RFC</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">简介</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../abstract/">概览</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../game/">游戏</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../controller/">控制器</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../judger/">裁判</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../player/">播放器</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../SDK(AI)/">SDK(AI)</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../website/">网站</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../backend2judger/">网站后端-测评端</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">房间系统</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#_1">网站前端与评测端房间系统交互文档</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#_2">概要</a></li>
+        
+            <li><a class="toctree-l3" href="#_3">定义</a></li>
+        
+            <li><a class="toctree-l3" href="#_4">控制流程</a></li>
+        
+            <li><a class="toctree-l3" href="#_5">通信</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">THUAC RFC</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>房间系统</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <div class="toc">
+<ul>
+<li><a href="#_1">网站前端与评测端房间系统交互文档</a><ul>
+<li><a href="#_2">概要</a></li>
+<li><a href="#_3">定义</a><ul>
+<li><a href="#id">房间id</a></li>
+<li><a href="#token">房间token</a></li>
+</ul>
+</li>
+<li><a href="#_4">控制流程</a></li>
+<li><a href="#_5">通信</a><ul>
+<li><a href="#_6">前端与评测机建立连接</a></li>
+<li><a href="#_7">评测机推送房间列表</a></li>
+<li><a href="#_8">前端向评测机获取房间列表</a></li>
+<li><a href="#_9">用户在前端申请创建房间</a></li>
+<li><a href="#_10">评测机创建房间</a></li>
+<li><a href="#_11">前端申请加入房间</a></li>
+<li><a href="#_12">评测机向房间内用户广播房间信息</a></li>
+<li><a href="#_13">前端请求游戏开始</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="_1">网站前端与评测端房间系统交互文档</h1>
+<h2 id="_2">概要</h2>
+<p>​   该文档指定了网站前端与评测机上的房间系统交互的接口，双方采用<code>Websocket协议</code>进行通信。</p>
+<h2 id="_3">定义</h2>
+<h3 id="id">房间id</h3>
+<p>​   对于前端，房间<code>id</code>用于确定房间列表中的房间。</p>
+<h3 id="token">房间token</h3>
+<p>​   房间<code>token</code>是针对用户计算而来的，一个<code>token</code>应由如下规则生成：</p>
+<pre><code class="python">token = JUDGE_IP + &quot;:&quot; + JUDGE_PORT + &quot;@&quot; + ROOM_ID + &quot;/&quot; + USER_NAME
+</code></pre>
+
+<p>​   其中<code>JUDGE_IP</code>为评测机的IP地址，<code>JUDGE_PORT</code>为评测机侦听该房间信息用的端口，<code>ROOM_ID</code>为房间的<code>ID</code>，<code>USER_NAME</code>为该用户的用户名。</p>
+<h2 id="_4">控制流程</h2>
+<ul>
+<li>评测机向前端发送房间列表</li>
+<li>前端向评测机获取房间列表</li>
+<li>用户网站前端申请创建房间</li>
+<li>评测机创建房间并分配房间号</li>
+<li>用户在网站前端申请加入房间</li>
+<li>评测机与前端建立连接，并向房间广播</li>
+<li>网站前端申请添加AI</li>
+<li>评测机启动AI，并广播AI准备状态</li>
+<li>用户在播放器申请加入房间</li>
+<li>评测机连接播放器并向房间广播</li>
+<li>用户在前端申请开始游戏</li>
+<li>评测机开始游戏，并向房间广播</li>
+</ul>
+<h2 id="_5">通信</h2>
+<p>如无特例，通信均采用<code>json</code>格式的数据进行交互。</p>
+<h3 id="_6">前端与评测机建立连接</h3>
+<p>​   连接成功后，评测机立刻推送房间列表。</p>
+<h3 id="_7">评测机推送房间列表</h3>
+<p>​   评测机发送</p>
+<pre><code class="json">{
+    'type': 'push_room_list',
+    'room': room_list,
+}
+</code></pre>
+
+<p>​   其中<code>room_list</code>为房间列表，其中的对象如下：</p>
+<pre><code class="json">{
+    'id': room_id,
+    'host': host_username,
+    'players': username_list,
+    'game': game_id,
+    'private': Boolean
+}
+</code></pre>
+
+<p>​   <code>room_id</code>为房间id，<code>host_username</code>为房主的用户名，<code>username_list</code>为该房间中的玩家的<code>username</code>列表，<code>game_id</code>为房间中的游戏的id，<code>private</code>项表示该房间是否拥有密码。   </p>
+<h3 id="_8">前端向评测机获取房间列表</h3>
+<p>​   前端发送</p>
+<pre><code class="json">{
+    'type': 'get_room_list'
+}
+</code></pre>
+
+<p>​   评测机将回复一个房间列表的推送。</p>
+<h3 id="_9">用户在前端申请创建房间</h3>
+<p>​   前端发送</p>
+<pre><code class="json">{
+    'type': 'create_room',
+    'user': username,
+    'game': game_id,
+    'private': Boolean
+}
+</code></pre>
+
+<h3 id="_10">评测机创建房间</h3>
+<p>​   创建完后评测机将会更新房间列表并作推送，同时发送如下信息</p>
+<pre><code class="json">{
+    'type': 'room_created',
+    'user': username,
+    'room': room_id
+}
+</code></pre>
+
+<h3 id="_11">前端申请加入房间</h3>
+<p>​   前端应与某个与<code>room_id</code>相关联的<code>websocket</code>建立连接。</p>
+<h3 id="_12">评测机向房间内用户广播房间信息</h3>
+<p>​   当某个房间内的状态发生变化(增加AI/用户出入等)时，评测机向房间内的用户广播如下信息</p>
+<pre><code class="json">{
+    'type': 'status',
+    'player': player_list,
+    'game': game_id,
+    'game_status': game_status // Boolean
+    'token': token,
+}
+</code></pre>
+
+<p>​   其中<code>game_id</code>为房间游戏的id，<code>game_status</code>表示该游戏是否已经开始，<code>player_list</code>为一个列表，列表中的对象格式如下：</p>
+<pre><code class="json">{
+    'type': player_type, // 该用户是'ai'还是'human'还是'remote'
+    'ready': is_ready, // 准备状态，Boolean
+    'name': username // 该玩家的用户名
+}
+</code></pre>
+
+<h3 id="_13">前端请求游戏开始</h3>
+<p>​   前端发送：</p>
+<pre><code class="json">{
+    'type': 'start'
+}
+</code></pre>
+
+<p>​   表示请求游戏开始。</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../backend2judger/" class="btn btn-neutral" title="网站后端-测评端"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../backend2judger/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>
