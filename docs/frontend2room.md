@@ -106,25 +106,39 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "@" + ROOM_ID + "/" + USER_NAME
 
 ```json
 {
-	'type': 'status',
-   	'player': player_list,
+    'type': 'status',
+    'users': user_list,
+    'players': player_list,
     'game': game_id,
-    'game_status': game_status // Boolean
-    'token': token,
+    'game_status': game_status, // bool
+    'tokens': tokens
 }
 ```
 
-​	其中`game_id`为房间游戏的id，`game_status`表示该游戏是否已经开始，`player_list`为一个列表，列表中的对象格式如下：
+- `user_list`：用户名的列表
 
-```json
-{
-    'type': player_type, // 该用户是'ai'还是'human'还是'remote'
-    'ready': is_ready, // 准备状态，Boolean
-    'name': username // 该玩家的用户名
-}
-```
+- `player_list`：玩家的列表，具体内容如下：
 
-前端申请加入房间
+  - 
+
+    ```json
+    {
+        'type': player_type, // 该用户是'ai'还是'human'还是'remote'
+        'ready': is_ready, // 准备状态，Boolean
+        'seat': seat, // 座次
+        'name': username // 该玩家的用户名
+    }
+    ```
+
+- `game_id`：该房间的游戏对应的id。
+
+- `game_status`：该房间的对局是否已经开始。
+
+- `tokens`：该房间的`token`列表，与`user_list`一一对应（即，每个玩家应有独立的房间`token`）。
+
+  
+
+### 前端申请加入房间
 
 ​	前端应与某个与`room_id`相关联的`websocket`建立连接。
 
