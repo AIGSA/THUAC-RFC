@@ -262,3 +262,4 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "/" + ROOM_ID + "/" + USER_NAME
 ```
 
 ​	表示请求游戏开始。
+
