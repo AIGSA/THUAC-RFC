@@ -13,7 +13,7 @@
 ​	一个房间的`token`按如下规则生成：
 
 ```python
-token = JUDGE_IP + ":" + JUDGE_PORT + "@" + ROOM_ID + "/" + USER_NAME
+token = JUDGE_IP + ":" + JUDGE_PORT + "/" + ROOM_ID + "/" + USER_NAME
 ```
 
 ​	其中`JUDGE_IP`为评测机的地址，`JUDGE_PORT`为评测机通信端口，`ROOM_ID`为房间编号，`USER_NAME`为播放器用户的用户名。
