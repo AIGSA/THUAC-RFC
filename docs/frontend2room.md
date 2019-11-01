@@ -23,7 +23,7 @@
 ​	房间`token`是针对用户计算而来的，一个`token`应由如下规则生成：
 
 ```python
-token = JUDGE_IP + ":" + JUDGE_PORT + "@" + ROOM_ID + "/" + USER_NAME
+token = JUDGE_IP + ":" + JUDGE_PORT + "/" + ROOM_ID + "/" + USER_NAME
 ```
 
 ​	其中`JUDGE_IP`为评测机的IP地址，`JUDGE_PORT`为评测机侦听该房间信息用的端口，`ROOM_ID`为房间的`ID`，`USER_NAME`为该用户的用户名。
@@ -186,6 +186,22 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "@" + ROOM_ID + "/" + USER_NAME
 ```
 
 ​	其中`seat_before`为更换前的座次，`seat_after`为更换后的座次。
+
+
+
+### 前端申请准备人类选手
+
+​	当前端请求人类选手做准备时，应发送如下信息：
+
+```json
+{
+    'type': 'ready_human',
+    'user': username,
+    'seat': seat
+}
+```
+
+​	其中`username`为用户名，`seat`为座次。
 
 
 
