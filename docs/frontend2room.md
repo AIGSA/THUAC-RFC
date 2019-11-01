@@ -86,35 +86,6 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "@" + ROOM_ID + "/" + USER_NAME
 
 
 
-### 前端向评测机获取房间列表
-
-​	前端发送
-
-```json
-{
-	'type': 'get_room_list'
-}
-```
-
-​	评测机将回复一个房间列表的推送。
-
-
-
-### 用户在前端申请创建房间
-
-​	前端发送
-
-```json
-{
-    'type': 'create_room',
-    'user': username,
-    'game': game_id,
-    'private': Boolean
-}
-```
-
-
-
 ### 评测机创建房间
 
 ​	创建完后评测机将会更新房间列表并作推送，同时发送如下信息
@@ -126,12 +97,6 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "@" + ROOM_ID + "/" + USER_NAME
     'room': room_id
 }
 ```
-
-
-
-### 前端申请加入房间
-
-​	前端应与某个与`room_id`相关联的`websocket`建立连接。
 
 
 
@@ -159,6 +124,87 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "@" + ROOM_ID + "/" + USER_NAME
 }
 ```
 
+前端申请加入房间
+
+​	前端应与某个与`room_id`相关联的`websocket`建立连接。
+
+
+
+### 前端向评测机获取房间列表
+
+​	前端发送
+
+```json
+{
+	'type': 'get_room_list'
+}
+```
+
+​	评测机将回复一个房间列表的推送。
+
+
+
+### 前端申请创建房间
+
+​	前端发送
+
+```json
+{
+    'type': 'create_room',
+    'user': username,
+    'game': game_id,
+    'private': Boolean
+}
+```
+
+
+
+### 前端请求更换座次
+
+​	当前端请求更换座次时，应发送如下信息：
+
+```json
+{
+    'type': 'change_seat',
+    'before': seat_before,
+    'after': seat_after
+}
+```
+
+​	其中`seat_before`为更换前的座次，`seat_after`为更换后的座次。
+
+
+
+### 前端申请准备本地AI
+
+​	当某个用户添加本地AI时，前端应发送如下消息：
+
+```json
+{
+    'type': 'ready_ai',
+    'seat': seat,
+    'ai': ai_token
+}
+```
+
+​	其中`seat`为该AI的座次，应当为一整数， `ai_token`为某个AI的唯一标识符。	
+
+
+
+### 前端取消准备本地AI
+
+​	当某个用户删除本地AI时，前端应发送如下信息：
+
+```json
+{
+    'type': 'cancel_ai',
+    'seat': seat,
+    'ai': ai_token
+}
+```
+
+​	其中`seat`为该AI的座次，应当为一整数， `ai_token`为某个AI的唯一标识符。	
+
 
 
 ### 前端请求游戏开始
@@ -172,4 +218,3 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "@" + ROOM_ID + "/" + USER_NAME
 ```
 
 ​	表示请求游戏开始。
-
