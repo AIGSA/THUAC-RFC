@@ -205,6 +205,20 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "/" + ROOM_ID + "/" + USER_NAME
 
 
 
+### 前端申请取消人类选手准备
+
+​	当前端取消人类选手准备时，应发送：
+
+```json
+{
+    'type': 'cancel_human',
+    'user': username,
+    'seat': seat
+}
+```
+
+
+
 ### 前端申请准备本地AI
 
 ​	当某个用户添加本地AI时，前端应发送如下消息：
