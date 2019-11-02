@@ -109,6 +109,7 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "/" + ROOM_ID + "/" + USER_NAME
 ```json
 {
     'type': 'status',
+    'host': username,
     'users': user_object_list,
     'players': player_list,
     'game': game_id,
@@ -117,7 +118,9 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "/" + ROOM_ID + "/" + USER_NAME
 }
 ```
 
-- `user_list`：用户名的列表
+- `users`：用户名对象的列表
+
+- `host`：房主的用户名
 
 - `player_list`：玩家的列表，具体内容如下：
 
