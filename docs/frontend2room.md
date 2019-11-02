@@ -126,7 +126,8 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "/" + ROOM_ID + "/" + USER_NAME
         'type': player_type, // 该用户是'ai'还是'human'还是'remote'
         'ready': is_ready, // 准备状态，Boolean
         'seat': seat, // 座次
-        'name': username // 该玩家的用户名
+        'user': user_object // 该玩家的对象
+        'ai': ai_object // 该座位如果是个'ai'，则是一个ai的对象，否则传None
     }
     ```
 
@@ -165,13 +166,15 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "/" + ROOM_ID + "/" + USER_NAME
 ```json
 {
     'type': 'create_room',
-    'user': username,
-    'game': game_id,
+    'user': user_object,
+    'game': game_object,
     'private': Boolean
 }
 ```
 
+​	其中`user_object`为一个对象，用户名在`user_object['username']`中；`game_object`为一个对象，游戏的id在`game_object['id']`中。
 
+​	
 
 ### 前端请求更换座次
 
@@ -227,11 +230,11 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "/" + ROOM_ID + "/" + USER_NAME
 {
     'type': 'ready_ai',
     'seat': seat,
-    'ai': ai_token
+    'ai': ai_object
 }
 ```
 
-​	其中`seat`为该AI的座次，应当为一整数， `ai_token`为某个AI的唯一标识符。	
+​	其中`seat`为该AI的座次，应当为一整数， `ai_object`为一个对象，ai的唯一标识符可从`ai_object['code']['id']`获取。
 
 
 
@@ -242,12 +245,11 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "/" + ROOM_ID + "/" + USER_NAME
 ```json
 {
     'type': 'cancel_ai',
-    'seat': seat,
-    'ai': ai_token
+    'seat': seat
 }
 ```
 
-​	其中`seat`为该AI的座次，应当为一整数， `ai_token`为某个AI的唯一标识符。	
+​	其中`seat`为该AI的座次，应当为一整数。	
 
 
 
