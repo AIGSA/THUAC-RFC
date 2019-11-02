@@ -49,7 +49,9 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "/" + ROOM_ID + "/" + USER_NAME
 
 ## 通信
 
-如无特例，通信均采用`json`格式的数据进行交互。
+​	如无特例，通信均采用`json`格式的数据进行交互。
+
+​	需要注意的是，前端会传一些object给评测机，用于减少向后端查询数据的次数，对评测机而言，这些object中基本上只有`id`之类的属性是有用的。
 
 
 
@@ -76,13 +78,13 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "/" + ROOM_ID + "/" + USER_NAME
 {
     'id': room_id,
     'host': host_username,
-    'players': username_list,
+    'users': user_object_list,
     'game': game_id,
     'private': Boolean
 }
 ```
 
-​	`room_id`为房间id，`host_username`为房主的用户名，`username_list`为该房间中的玩家的`username`列表，`game_id`为房间中的游戏的id，`private`项表示该房间是否拥有密码。	
+​	`room_id`为房间id，`host_username`为房主的用户名，`user_object_list`为该房间中的玩家的`user_object`列表，`game_id`为房间中的游戏id，`private`项表示该房间是否拥有密码。	
 
 
 
@@ -107,7 +109,7 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "/" + ROOM_ID + "/" + USER_NAME
 ```json
 {
     'type': 'status',
-    'users': user_list,
+    'users': user_object_list,
     'players': player_list,
     'game': game_id,
     'game_status': game_status, // bool
@@ -126,7 +128,7 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "/" + ROOM_ID + "/" + USER_NAME
         'type': player_type, // 该用户是'ai'还是'human'还是'remote'
         'ready': is_ready, // 准备状态，Boolean
         'seat': seat, // 座次
-        'user': user_object // 该玩家的对象
+        'user': username // 该玩家的用户名
         'ai': ai_object // 该座位如果是个'ai'，则是一个ai的对象，否则传None
     }
     ```
