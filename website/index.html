@@ -88,7 +88,15 @@
     <a class="current" href="./">网站</a>
     <ul class="subnav">
             
-    <li class="toctree-l2"><a href="#_1">网站</a></li>
+    <li class="toctree-l2"><a href="#-">网站-游戏流程</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#_1">天梯启动游戏的流程:</a></li>
+        
+            <li><a class="toctree-l3" href="#_2">人类启动游戏的流程:</a></li>
+        
+        </ul>
     
 
     </ul>
@@ -141,9 +149,46 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="_1">网站</h1>
+                <h1 id="-">网站-游戏流程</h1>
 <p>网站涉及内容众多，这里只详细叙述一局游戏的流程</p>
-<p><img alt="一局游戏" src="../imgs/一局游戏.png" /></p>
+<p>游戏启动有两种类型, 可能由天梯启动或者由人类启动, 两个过程不同.</p>
+<h3 id="_1">天梯启动游戏的流程:</h3>
+<ol>
+<li>
+<p>后端的天梯模块生成一个对局请求, 发送给controller(包括: 游戏类型, 对局AI程序的ID)</p>
+</li>
+<li>
+<p>controller收到对局请求后, 启动游戏对应的judger,发送对局AI程序的信息给judger</p>
+</li>
+<li>
+<p>judger启动AI和游戏逻辑</p>
+</li>
+<li>
+<p>对局中, judger, AI, 游戏逻辑之间进行通信</p>
+</li>
+<li>游戏开始</li>
+<li>循环执行回合</li>
+<li>
+<p>游戏结束</p>
+</li>
+<li>
+<p>对局结束, judger将结果返回给controller</p>
+</li>
+<li>
+<p>controller将结果返回给后端天梯模块</p>
+</li>
+</ol>
+<h3 id="_2">人类启动游戏的流程:</h3>
+<ol>
+<li>房主在网站前端选择一个评测机, 申请建立房间</li>
+<li>controller建立房间, 等待玩家/AI加入</li>
+<li>玩家向房间内添加AI/删除AI 人类玩家或观众通过Token进入房间, 用播放器建立连接</li>
+<li>房主在前端开始游戏, 向评测机发送对局请求</li>
+<li>controller启动judger, judger启动游戏逻辑和AI</li>
+<li>对局中, judger, AI, 人类玩家/观众(播放器), 游戏逻辑之间进行通信</li>
+<li>对局结束, judger将结果返回给controller</li>
+<li>controller将结果返回到后端和播放器</li>
+</ol>
               
             </div>
           </div>

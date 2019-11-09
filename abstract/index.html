@@ -142,19 +142,29 @@
             <div class="section">
               
                 <h1 id="_1">概览</h1>
-<p>对于THUAC，一场比赛包含以下两个主体部分：游戏，对战平台(Saiblo)</p>
+<p>对于THUAC，一场比赛包含以下两个主体部分: 对战平台(Saiblo), 玩家</p>
 <p>各部件组成结构如下：</p>
 <ul>
-<li>Saiblo 对战平台</li>
-<li>游戏<ul>
-<li>播放器：游戏画面展示，人类玩家交互界面</li>
-<li>裁判程序：游戏核心逻辑</li>
-<li>玩家：AI 或 人类操纵</li>
+<li>Saiblo 对战平台<ul>
+<li>网站前端, 后端</li>
+<li>评测端:<ul>
+<li>控制器(controller)</li>
+<li>编译器(compiler)</li>
+<li>裁判(judger), 每个judger对应一局游戏</li>
+<li>游戏逻辑(logic)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>玩家<ul>
+<li>部署在服务器的"本地"AI</li>
+<li>远程人类操纵的玩家, 或远程算力</li>
+<li>也有可能是一个不参与游戏的观众</li>
 </ul>
 </li>
 </ul>
 <p>各个部件之间交互方式如下：</p>
-<p><img alt="架构" src="../imgs/架构.png" /></p>
+<p><img alt="架构" src="../imgs/新架构.png" /></p>
               
             </div>
           </div>
