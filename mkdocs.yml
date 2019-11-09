@@ -9,7 +9,8 @@ nav:
 - SDK(AI): SDK(AI).md
 - 网站: website.md
 - 网站后端-测评端: backend2judger.md
-- 房间系统: frontend2room.md
+- 网站前端-房间系统: frontend2room.md
+- 房间系统-播放器: room2player.md
 
 
 theme: readthedocs

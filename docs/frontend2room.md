@@ -23,7 +23,7 @@
 ​	房间`token`是针对用户计算而来的，一个`token`应由如下规则生成：
 
 ```python
-token = JUDGE_IP + ":" + JUDGE_PORT + "@" + ROOM_ID + "/" + USER_NAME
+token = JUDGE_IP + ":" + JUDGE_PORT + "/" + ROOM_ID + "/" + USER_NAME
 ```
 
 ​	其中`JUDGE_IP`为评测机的IP地址，`JUDGE_PORT`为评测机侦听该房间信息用的端口，`ROOM_ID`为房间的`ID`，`USER_NAME`为该用户的用户名。
@@ -49,7 +49,9 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "@" + ROOM_ID + "/" + USER_NAME
 
 ## 通信
 
-如无特例，通信均采用`json`格式的数据进行交互。
+​	如无特例，通信均采用`json`格式的数据进行交互。
+
+​	需要注意的是，前端会传一些object给评测机，用于减少向后端查询数据的次数，对评测机而言，这些object中基本上只有`id`之类的属性是有用的。
 
 
 
@@ -76,42 +78,13 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "@" + ROOM_ID + "/" + USER_NAME
 {
     'id': room_id,
     'host': host_username,
-    'players': username_list,
+    'users': user_object_list,
     'game': game_id,
     'private': Boolean
 }
 ```
 
-​	`room_id`为房间id，`host_username`为房主的用户名，`username_list`为该房间中的玩家的`username`列表，`game_id`为房间中的游戏的id，`private`项表示该房间是否拥有密码。	
-
-
-
-### 前端向评测机获取房间列表
-
-​	前端发送
-
-```json
-{
-	'type': 'get_room_list'
-}
-```
-
-​	评测机将回复一个房间列表的推送。
-
-
-
-### 用户在前端申请创建房间
-
-​	前端发送
-
-```json
-{
-    'type': 'create_room',
-    'user': username,
-    'game': game_id,
-    'private': Boolean
-}
-```
+​	`room_id`为房间id，`host_username`为房主的用户名，`user_object_list`为该房间中的玩家的`user_object`列表，`game_id`为房间中的游戏id，`private`项表示该房间是否拥有密码。	
 
 
 
@@ -129,35 +102,164 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "@" + ROOM_ID + "/" + USER_NAME
 
 
 
-### 前端申请加入房间
-
-​	前端应与某个与`room_id`相关联的`websocket`建立连接。
-
-
-
 ### 评测机向房间内用户广播房间信息
 
 ​	当某个房间内的状态发生变化(增加AI/用户出入等)时，评测机向房间内的用户广播如下信息
 
 ```json
 {
-	'type': 'status',
-   	'player': player_list,
+    'type': 'status',
+    'users': user_object_list,
+    'players': player_list,
     'game': game_id,
-    'game_status': game_status // Boolean
-    'token': token,
+    'game_status': game_status, // bool
+    'tokens': tokens
 }
 ```
 
-​	其中`game_id`为房间游戏的id，`game_status`表示该游戏是否已经开始，`player_list`为一个列表，列表中的对象格式如下：
+- `user_list`：用户名的列表
+
+- `player_list`：玩家的列表，具体内容如下：
+
+  - 
+
+    ```json
+    {
+        'type': player_type, // 该用户是'ai'还是'human'还是'remote'
+        'ready': is_ready, // 准备状态，Boolean
+        'seat': seat, // 座次
+        'user': username // 该玩家的用户名
+        'ai': ai_object // 该座位如果是个'ai'，则是一个ai的对象，否则传None
+    }
+    ```
+
+- `game_id`：该房间的游戏对应的id。
+
+- `game_status`：该房间的对局是否已经开始。
+
+- `tokens`：该房间的`token`列表，与`user_list`一一对应（即，每个玩家应有独立的房间`token`）。
+
+
+### 前端申请加入房间
+
+​	前端应与某个与`room_id`相关联的`websocket`建立连接，并发送。
 
 ```json
 {
-    'type': player_type, // 该用户是'ai'还是'human'还是'remote'
-    'ready': is_ready, // 准备状态，Boolean
-    'name': username // 该玩家的用户名
+ 	'type': 'add_room',
+    'user': user_object
 }
 ```
+
+​	其中`user_object`为用户对象。
+
+
+
+### 前端向评测机获取房间列表
+
+​	前端发送
+
+```json
+{
+	'type': 'get_room_list'
+}
+```
+
+​	评测机将回复一个房间列表的推送。
+
+
+
+### 前端申请创建房间
+
+​	前端发送
+
+```json
+{
+    'type': 'create_room',
+    'user': user_object,
+    'game': game_object,
+    'private': Boolean
+}
+```
+
+​	其中`user_object`为一个对象，用户名在`user_object['username']`中；`game_object`为一个对象，游戏的id在`game_object['id']`中。
+
+​	
+
+### 前端请求更换座次
+
+​	当前端请求更换座次时，应发送如下信息：
+
+```json
+{
+    'type': 'change_seat',
+    'before': seat_before,
+    'after': seat_after
+}
+```
+
+​	其中`seat_before`为更换前的座次，`seat_after`为更换后的座次。
+
+
+
+### 前端申请准备人类选手
+
+​	当前端请求人类选手做准备时，应发送如下信息：
+
+```json
+{
+    'type': 'ready_human',
+    'user': username,
+    'seat': seat
+}
+```
+
+​	其中`username`为用户名，`seat`为座次。
+
+
+
+### 前端申请取消人类选手准备
+
+​	当前端取消人类选手准备时，应发送：
+
+```json
+{
+    'type': 'cancel_human',
+    'user': username,
+    'seat': seat
+}
+```
+
+
+
+### 前端申请准备本地AI
+
+​	当某个用户添加本地AI时，前端应发送如下消息：
+
+```json
+{
+    'type': 'ready_ai',
+    'seat': seat,
+    'ai': ai_object
+}
+```
+
+​	其中`seat`为该AI的座次，应当为一整数， `ai_object`为一个对象，ai的唯一标识符可从`ai_object['code']['id']`获取。
+
+
+
+### 前端取消准备本地AI
+
+​	当某个用户删除本地AI时，前端应发送如下信息：
+
+```json
+{
+    'type': 'cancel_ai',
+    'seat': seat
+}
+```
+
+​	其中`seat`为该AI的座次，应当为一整数。	
 
 
 
