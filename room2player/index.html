@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>房间系统交互文档 - THUAC RFC</title>
+  <title>房间系统-播放器 - THUAC RFC</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "\u623f\u95f4\u7cfb\u7edf\u4ea4\u4e92\u6587\u6863";
-    var mkdocs_page_input_path = "room.md";
+    var mkdocs_page_name = "\u623f\u95f4\u7cfb\u7edf-\u64ad\u653e\u5668";
+    var mkdocs_page_input_path = "room2player.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -95,7 +95,28 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../frontend2room/">房间系统</a>
+    <a class="" href="../frontend2room/">网站前端-房间系统</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">房间系统-播放器</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#_1">播放器与房间连接的通信</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#_2">播放器对房间的通信</a></li>
+        
+            <li><a class="toctree-l3" href="#_5">房间对播放器的通信</a></li>
+        
+            <li><a class="toctree-l3" href="#_7">回合信息</a></li>
+        
+        </ul>
+    
+
+    </ul>
 	    </li>
           
         </ul>
@@ -120,7 +141,7 @@
     
       
     
-    <li>房间系统交互文档</li>
+    <li>房间系统-播放器</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -130,46 +151,61 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="_1">房间系统交互文档</h1>
-<h2 id="_2">概要</h2>
-<p>该文档定义了前端与测评端的的房间系统交互，原则上所有通信采用 Websocket 协议。</p>
-<p>测评端地址：<code>ws://JUDGER_IP:JUDGER_PORT/ws</code>，该地址应由测评端初始化时提供给网站后端。</p>
-<h2 id="-">前端 -&gt; 测评端</h2>
-<h3 id="_3">获得房间列表</h3>
+                <h1 id="_1">播放器与房间连接的通信</h1>
+<p>​   播放器与评测端的房间通过<code>websocket</code>进行连接，以<code>json</code>格式的数据进行通信。</p>
+<h2 id="_2">播放器对房间的通信</h2>
+<h3 id="_3">连接房间</h3>
+<p>​   一个房间的<code>token</code>按如下规则生成：</p>
+<pre><code class="python">token = JUDGE_IP + &quot;:&quot; + JUDGE_PORT + &quot;/&quot; + ROOM_ID + &quot;/&quot; + USER_NAME
+</code></pre>
+
+<p>​   其中<code>JUDGE_IP</code>为评测机的地址，<code>JUDGE_PORT</code>为评测机通信端口，<code>ROOM_ID</code>为房间编号，<code>USER_NAME</code>为播放器用户的用户名。</p>
+<p>​   播放器需要一个<code>token</code>来解析评测机的IP地址与端口，并与房间进行连接。</p>
+<p>​   在播放器中填入<code>token</code>并与房间连接之后，需要发送如下信息：</p>
 <pre><code class="json">{
-    'type': 0
+    &quot;token&quot;: token,
+    &quot;request&quot;: &quot;connect&quot;
 }
 </code></pre>
 
-<h2 id="-_1">测评端 -&gt; 前端</h2>
-<h3 id="_4">推送房间列表</h3>
-<p>当房间列表更新或者前端主动请求更新房间列表时，服务器应推送完整房间列表</p>
+<h3 id="_4">发送回合数据</h3>
+<p>​   播放器在用户进行操作后需要发送回合数据给房间，格式如下：</p>
 <pre><code class="json">{
-    'type': 0
-    'data': {
-        'rooms': [
-            {
-                'room_id': 1000,
-                'game': {
-                    'id': 0,
-                    'name': 'uno',
-                    'alias': 'UNO 牌'
-                }
-                'players': [
-                    {
-                       'username': 'admin',
-                       'email': 'admin@saiblo.com'
-                    }
-                ]
-            }
-        ]
-    }
+    &quot;token&quot;: token,
+    &quot;request&quot;: &quot;action&quot;,
+    &quot;content&quot;: content
 }
 </code></pre>
+
+<p>​   其中<code>content</code>为播放器需要发送给游戏逻辑的回合信息，它应当是一个字符串，房间会将<code>content</code>原封不动地转发给游戏逻辑。<code>content</code>的内容应与游戏逻辑进行约定。</p>
+<h2 id="_5">房间对播放器的通信</h2>
+<h3 id="_6">连接房间</h3>
+<p>​   当房间与播放器连接成功时，房间会回传连接成功的消息，如下：</p>
+<pre><code class="json">{
+    &quot;request&quot;: &quot;connected&quot;
+}
+</code></pre>
+
+<h2 id="_7">回合信息</h2>
+<p>​   当游戏逻辑出现了新的回合信息（或游戏结束信息）、需要发送给播放器时，房间会发送如下信息：</p>
+<pre><code class="json">{
+    &quot;request&quot;: &quot;action&quot;,
+    &quot;content&quot;: content
+}
+</code></pre>
+
+<p>​   其中<code>content</code>为游戏逻辑发送给播放器的回合信息，它是一个字符串。<code>content</code>的内容应与游戏逻辑进行约定。</p>
               
             </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../frontend2room/" class="btn btn-neutral" title="网站前端-房间系统"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -192,6 +228,8 @@
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
+      
+        <span><a href="../frontend2room/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
     </span>
