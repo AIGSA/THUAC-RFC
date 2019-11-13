@@ -8,24 +8,23 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>网站后端-测评端 - THUAC RFC</title>
+  <title>Backend2judger - THUAC RFC</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link rel="stylesheet" href="../css/highlight.css">
   
   <script>
     // Current page data
-    var mkdocs_page_name = "\u7f51\u7ad9\u540e\u7aef-\u6d4b\u8bc4\u7aef";
+    var mkdocs_page_name = "Backend2judger";
     var mkdocs_page_input_path = "backend2judger.md";
-    var mkdocs_page_url = null;
+    var mkdocs_page_url = "/backend2judger/";
   </script>
   
-  <script src="../js/jquery-2.1.1.min.js" defer></script>
-  <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script> 
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
   
 </head>
 
@@ -39,7 +38,7 @@
         <a href=".." class="icon icon-home"> THUAC RFC</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+    <input type="text" name="q" placeholder="Search docs" />
   </form>
 </div>
       </div>
@@ -50,32 +49,7 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="..">简介</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../abstract/">概览</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../game/">游戏</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../controller/">控制器</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../judger/">裁判</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="../player/">播放器</a>
+    <a class="" href="..">Home</a>
 	    </li>
           
             <li class="toctree-l1">
@@ -85,12 +59,12 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../website/">网站</a>
+    <a class="" href="../abstract/">Abstract</a>
 	    </li>
           
             <li class="toctree-l1 current">
 		
-    <a class="current" href="./">网站后端-测评端</a>
+    <a class="current" href="./">Backend2judger</a>
     <ul class="subnav">
             
     <li class="toctree-l2"><a href="#_1">网站后端与测评端交互文档</a></li>
@@ -115,12 +89,42 @@
           
             <li class="toctree-l1">
 		
-    <a class="" href="../frontend2room/">网站前端-房间系统</a>
+    <a class="" href="../communication/">Communication</a>
 	    </li>
           
             <li class="toctree-l1">
 		
-    <a class="" href="../room2player/">房间系统-播放器</a>
+    <a class="" href="../controller/">Controller</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../frontend2room/">Frontend2room</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../game/">Game</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../judger/">Judger</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../player/">Player</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../room2player/">Room2player</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../website/">Website</a>
 	    </li>
           
         </ul>
@@ -145,7 +149,7 @@
     
       
     
-    <li>网站后端-测评端</li>
+    <li>Backend2judger</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -270,6 +274,16 @@
 }
 </code></pre>
 
+<h5 id="_12">参数</h5>
+<ul>
+<li><code>language</code>选项 - 前端显示信息</li>
+<li>'cmake'：c++ with CMake</li>
+<li>'make': c++ with Makefile</li>
+<li>'cpp': g++</li>
+<li>'c': gcc</li>
+<li>'python': python single file</li>
+<li>'python_zip': python zip file</li>
+</ul>
 <h4 id="put">PUT</h4>
 <p>评测端代码编译完成后，提交编译信息</p>
 <p><strong>数据</strong></p>
@@ -312,10 +326,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../frontend2room/" class="btn btn-neutral float-right" title="网站前端-房间系统">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../communication/" class="btn btn-neutral float-right" title="Communication">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../website/" class="btn btn-neutral" title="网站"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../abstract/" class="btn btn-neutral" title="Abstract"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -329,28 +343,26 @@
 
   Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-      
+	  
         </div>
       </div>
 
     </section>
-
+    
   </div>
 
   <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../website/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../abstract/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../frontend2room/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../communication/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
-    <script>var base_url = '..';</script>
-    <script src="../js/theme.js" defer></script>
-      <script src="../search/main.js" defer></script>
+    <script src="../js/theme.js"></script>
 
 </body>
 </html>
