@@ -142,11 +142,19 @@ token = JUDGE_IP + ":" + JUDGE_PORT + "/" + ROOM_ID + "/" + USER_NAME
 
 - `tokens`：该房间的`token`列表，与`user_list`一一对应（即，每个玩家应有独立的房间`token`）。
 
-  
 
 ### 前端申请加入房间
 
-​	前端应与某个与`room_id`相关联的`websocket`建立连接。
+​	前端应与某个与`room_id`相关联的`websocket`建立连接，并发送。
+
+```json
+{
+ 	'type': 'add_room',
+    'user': user_object
+}
+```
+
+​	其中`user_object`为用户对象。
 
 
 
