@@ -153,7 +153,7 @@
 * `language`选项 - 前端显示信息
   * 'cmake'：c++ with CMake
   * 'make': c++ with Makefile
-  * 'c++': g++
+  * 'cpp': g++
   * 'c': gcc
   * 'python': python single file
   * 'python_zip': python zip file
