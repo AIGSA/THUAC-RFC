@@ -148,6 +148,16 @@
 }
 ```
 
+##### 参数
+
+* `language`选项 - 前端显示信息
+  * 'cmake'：c++ with CMake
+  * 'make': c++ with Makefile
+  * 'c++': g++
+  * 'c': gcc
+  * 'python': python single file
+  * 'python_zip': python zip file
+
 #### PUT
 
 评测端代码编译完成后，提交编译信息
