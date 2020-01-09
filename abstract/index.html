@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Saiblo - Saiblo 平台开发维护手册</title>
+  <title>概览 - THUAC RFC</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Saiblo";
-    var mkdocs_page_input_path = "development.md";
+    var mkdocs_page_name = "\u6982\u89c8";
+    var mkdocs_page_input_path = "abstract.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -36,7 +36,7 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href=".." class="icon icon-home"> Saiblo 平台开发维护手册</a>
+        <a href=".." class="icon icon-home"> THUAC RFC</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
@@ -53,9 +53,60 @@
     <a class="" href="..">简介</a>
 	    </li>
           
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">概览</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#_1">概览</a></li>
+    
+
+    </ul>
+	    </li>
+          
             <li class="toctree-l1">
 		
-    <a class="" href="../deployment.md">部署</a>
+    <a class="" href="../game/">游戏</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../controller/">控制器</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../judger/">裁判</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../player/">播放器</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../SDK(AI)/">SDK(AI)</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../website/">网站</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../backend2judger/">网站后端-测评端</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../frontend2room/">网站前端-房间系统</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../room2player/">房间系统-播放器</a>
 	    </li>
           
         </ul>
@@ -68,7 +119,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="..">Saiblo 平台开发维护手册</a>
+        <a href="..">THUAC RFC</a>
       </nav>
 
       
@@ -80,7 +131,7 @@
     
       
     
-    <li>Saiblo</li>
+    <li>概览</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -90,54 +141,33 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="saiblo">Saiblo</h1>
-<h2 id="_1">介绍</h2>
-<p>Saiblo 网站是一个通用 AI 游戏平台，支持用户编写 AI 参加比赛或是进行人机对局，支持游戏开发者上传按照开发规范编写的游戏，支持比赛举办者举办关于某个游戏的比赛。</p>
-<h2 id="_2">部署方式</h2>
-<h3 id="docker">Docker (不推荐)</h3>
-<p>使用 Dockerfile 自动化部署</p>
-<pre><code class="bash">docker build -t saiblo .
-docker run -d -p 127.0.0.1:3000:80 --name saiblo saiblo
-docker start saiblo
-</code></pre>
-
-<p>网站将会在 <code>127.0.0.1:3000</code> 上启动，你可以修改为 <code>0.0.0.0:80</code> 监听来自所有地址的链接。这种方法不推荐</p>
-<h3 id="_3">本地部署</h3>
-<p>需要提前安装好 <code>Node.js, python3, redis</code>，其中 <code>redis</code> 需要运行在 <code>6379</code> 端口（可以在 <code>backend/app/settings.py</code> 的 <code>CACHES</code>  处进行配置）。</p>
-<h4 id="_4">安装依赖</h4>
-<pre><code class="bash">cd frontend
-npm install
-cd ../backend
-pip install -r requirements.txt
-</code></pre>
-
-<h4 id="_5">初始化数据库</h4>
-<pre><code class="bash">cd backend
-python manage.py migrate
-python manage.py loadtestdata # 如果有需要，可以载入这套测试数据，包含两个游戏以及若干小组
-</code></pre>
-
-<h4 id="_6">启动前端</h4>
-<pre><code class="bash">cd frontend
-npm run build # 编译前端
-export NUXT_HOST=0.0.0.0 # 指定监听地址
-export NUXT_PORT=80 # 指定端口
-npm run start # 启动前端
-</code></pre>
-
-<h4 id="_7">启动后端</h4>
-<pre><code class="bash">cd backend
-uvicorn app.asgi:application --workers 1 --port 8000 --host 127.0.0.1 # 以 1 个 worker 启动后端，如有需要可以增加 worker 数量，但需要换用 Mysql 等并发友好数据库，否则会在访问过快时死锁
-</code></pre>
-
-<h4 id="_8">可持久化运行</h4>
-<p>推荐使用 <code>supervisor</code> 配置服务，也可使用 <code>tmux</code> 来可持久化运行前后端</p>
-<h4 id="_9">测评端连接</h4>
-<p>测评段需要连接到后端监听的地址，如 <code>127.0.0.1:8000</code>，由于 <code>127.0.0.1:8000/judger/</code> 下的 API 不需要鉴权，所以不要将后端地址暴露出来，前端会有 </p>
+                <h1 id="_1">概览</h1>
+<p>对于THUAC，一场比赛包含以下两个主体部分：游戏，对战平台(Saiblo)</p>
+<p>各部件组成结构如下：</p>
+<ul>
+<li>Saiblo 对战平台</li>
+<li>游戏<ul>
+<li>播放器：游戏画面展示，人类玩家交互界面</li>
+<li>裁判程序：游戏核心逻辑</li>
+<li>玩家：AI 或 人类操纵</li>
+</ul>
+</li>
+</ul>
+<p>各个部件之间交互方式如下：</p>
+<p><img alt="架构" src="../imgs/架构.png" /></p>
               
             </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../game/" class="btn btn-neutral float-right" title="游戏">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="简介"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -161,6 +191,10 @@ uvicorn app.asgi:application --workers 1 --port 8000 --host 127.0.0.1 # 以 1 �
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../game/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
