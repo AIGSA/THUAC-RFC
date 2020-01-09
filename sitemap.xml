@@ -1,100 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-    
     <url>
-     <loc>/</loc>
-     <lastmod>2019-11-13</lastmod>
+     <loc>None</loc>
+     <lastmod>2020-01-09</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
     <url>
-     <loc>/SDK(AI)/</loc>
-     <lastmod>2019-11-13</lastmod>
+     <loc></loc>
+     
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
-    <url>
-     <loc>/abstract/</loc>
-     <lastmod>2019-11-13</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/backend2judger/</loc>
-     <lastmod>2019-11-13</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/communication/</loc>
-     <lastmod>2019-11-13</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/controller/</loc>
-     <lastmod>2019-11-13</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/frontend2room/</loc>
-     <lastmod>2019-11-13</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/game/</loc>
-     <lastmod>2019-11-13</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/judger/</loc>
-     <lastmod>2019-11-13</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/player/</loc>
-     <lastmod>2019-11-13</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/room2player/</loc>
-     <lastmod>2019-11-13</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
-    
-    <url>
-     <loc>/website/</loc>
-     <lastmod>2019-11-13</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    
-
 </urlset>
