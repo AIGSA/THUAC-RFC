@@ -14,5 +14,6 @@ nav:
 - 网站前端-概览: website_frontend.md
 - 网站前端-用户系统: website-frontend-user.md
 - 网站前端-小组系统: website-frontend-group.md
+- 网站前端-游戏系统: website-frontend-game.md
 
 theme: readthedocs
