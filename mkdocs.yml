@@ -13,5 +13,6 @@ nav:
 - 房间系统-播放器: room2player.md
 - 网站前端-概览: website_frontend.md
 - 网站前端-用户系统: website-frontend-user.md
+- 网站前端-小组系统: website_frontend-group.md
 
 theme: readthedocs
